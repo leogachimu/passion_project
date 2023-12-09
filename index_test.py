@@ -4,6 +4,8 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 """
 ## Welcome to Crypto Hub.
@@ -165,4 +167,13 @@ if __name__ == "__main__":
     """
 
     fb_forecast['yhat']
-    st.line_chart(fb_forecast['yhat'])
+
+    # Plotting using matplotlib to customize axis labels
+    plt.figure(figsize=(10, 6))
+    plt.gca().set_facecolor('lightpink') 
+    plt.plot(fb_forecast.index, fb_forecast['yhat'])
+    plt.xlabel('Date')  # Set xlabel
+    plt.ylabel('Predicted Price in USD')  # Set ylabel
+    plt.title('Forecasted Bitcoin Prices')  # Set plot title
+    plt.xticks(rotation=45, ha='right') # Rotate xticks
+    st.pyplot(plt)  # Display the plot in Streamlit

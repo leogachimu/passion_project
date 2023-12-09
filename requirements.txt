@@ -9,3 +9,7 @@ prophet
 pmdarima
 tensorflow
 keras
+bs4
+BeautifulSoup
+requests
+datetime

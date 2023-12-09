@@ -9,7 +9,7 @@ prophet
 pmdarima
 tensorflow
 keras
-beautifulsoup4
+beautifulsoup4==4.12.2
 BeautifulSoup
 requests
 datetime

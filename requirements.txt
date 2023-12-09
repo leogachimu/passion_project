@@ -10,8 +10,6 @@ pmdarima
 tensorflow
 keras
 beautifulsoup4==4.12.2
-bs4
-BeautifulSoup
 requests
 datetime
 matplotlib

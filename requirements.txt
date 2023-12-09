@@ -13,3 +13,5 @@ bs4
 BeautifulSoup
 requests
 datetime
+matplotlib
+seaborn

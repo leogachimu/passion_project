@@ -172,8 +172,8 @@ if __name__ == "__main__":
     plt.figure(figsize=(10, 6))
     plt.gca().set_facecolor('lightpink') 
     plt.plot(fb_forecast.index, fb_forecast['yhat'])
-    plt.xlabel('Date')  # Set xlabel
-    plt.ylabel('Predicted Price in USD')  # Set ylabel
-    plt.title('Forecasted Bitcoin Prices')  # Set plot title
+    plt.xlabel('Date', fontsize=12)  # Set xlabel
+    plt.ylabel('Predicted Price in USD', fontsize=12)  # Set ylabel
+    plt.title('Forecasted Bitcoin Prices', fontsize=15)  # Set plot title
     plt.xticks(rotation=45, ha='right') # Rotate xticks
     st.pyplot(plt)  # Display the plot in Streamlit

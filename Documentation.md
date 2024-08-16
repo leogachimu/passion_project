@@ -27,6 +27,7 @@ The diagram below illustrates the workflow I followed, from  ETL, transformation
 ### 3.1 Data Source
 All the data used in this project was provided by Zindi, which they extracted from the [Google Earth Engine](https://developers.google.com/earth-engine/datasets/). No external data was used. 
 Three data csv files were provided for this project:<br>
+
 ***a.) Train.csv***<br>
 This contains the target feature (burned area) along with 28 other features. It has 29 columns and 83,148 rows. Here is a description of the data features.
 1. **ID**: The IDs take the form of [area ID]_yyyy-mm-dd. There are 533 area squares each with a unique ID ranging from 0 to 532
@@ -89,20 +90,22 @@ I finally transformed the dataframe into a time series by setting the date colum
 A plot of the correlation coefficients showed that some predictor features have significant positive correlation with the burned area, some have significant negative correlation, while about a third of them have near zero correlation.<br>
 
 **Top 5 positively correlated features:**<br>
-Feature          Correlation<br>
-climate_def      0.279511<br> 
-climate_vs       0.261562<br>
-climate_pet      0.168871<br>
-climate_vpd      0.219974<br>
-climate_srad     0.160517
+| Feature | Correlation                                                       |
+|----------|-----------------------------------------------------------------|
+| climate_def       | 0.279511                                                |
+| climate_vs        | 0.261562                                                 |
+| climate_pet        | 0.168871                                |
+| climate_vpd        | 0.219974 |
+| climate_srad        | 0.160517 |
 
 **Top 5 negatively correlated features:**<br>
-Feature          Correlation<br>
-climate_tmmn    -0.099436<br>
-precipitation   -0.169218<br>
-climate_pr      -0.170532<br>
-climate_aet     -0.211806<br>
-climate_vap     -0.221348
+| Feature | Correlation                                                       |
+|----------|-----------------------------------------------------------------|
+| climate_tmmn       | -0.099436                                                |
+| precipitation        | -0.169218                                                 |
+| climate_pr        | -0.170532                                |
+| climate_aet        | -0.211806 |
+| climate_vap        | -0.221348 |
 
 #### 4.1.2 Trend and Seasonality Analysis
 Analysis and visualization of the data shows that the mean burned area has monthly and yearly seasonality. 
@@ -128,12 +131,12 @@ Given the seasonal nature of the series, I first built a simple Auto ARIMA model
 
 **2. Tuned Auto ARIMA model**
 Auto ARIMA allows hyperparameter tuning of autoregressive, differencing, and moving average terms (p, q, and d), test for stationarity of the differencing term, error handling, the seasonal period, and so on. To ensure a robust and efficient process, I initialized Auto ARIMA model with the following parameter settings:<br>
-    **m=12** to set the seasonal period.<br>
-    **start_p=0**, **start_q=0** to start the parameter search from zero.<br>
-    **max_order=5** to limit the maximum combined order of the non-seasonal AR and MA terms (p, q, and d).<br>
-    **test='adf'** to use the Augmented Dickey-Fuller test to check stationarity.<br>
-    **error_action='ignore'**, **suppress_warnings=True**, and **stepwise=True** to control the tuning process and prevent unnecessary errors/warnings.<br>
-    **trace=False** to suppress output tracing.
+   **m=12** to set the seasonal period.<br>
+   **start_p=0**, **start_q=0** to start the parameter search from zero.<br>
+   **max_order=5** to limit the maximum combined order of the non-seasonal AR and MA terms (p, q, and d).<br>
+   **test='adf'** to use the Augmented Dickey-Fuller test to check stationarity.<br>
+   **error_action='ignore'**, **suppress_warnings=True**, and **stepwise=True** to control the tuning process and prevent unnecessary errors/warnings.<br>
+   **trace=False** to suppress output tracing.
 
 However, from my tests, I realized that some areas such as 270 and 271 have insufficient variability of burned area data, making it impossible for the model to test and determine an appropriate differencing term, d. Almost all the areas that failed the auto ARIMA model test have only one non-zero value and 155 zeros out of a total of 156 rows.
 Therefore, in my modelling, I introduced a try and except block so that areas whose data could not be modelled would be imputed with 0 as the prediction.
